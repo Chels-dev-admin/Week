@@ -1,8 +1,12 @@
 # Host your Weekly OS dashboard on GitHub Pages
 
-This gives your dashboard a permanent web address (e.g. `https://yourname.github.io/my-week/`) with HTTPS — so "Add to Home Screen" works properly and any web-widget app can point at it. It's free and stays live.
+This gives your dashboard a permanent web address (e.g. `https://yourname.github.io/my-week/`) with HTTPS — so it becomes a real **installable app (PWA)**: it installs to your phone, opens in its own window, and works offline. It's free and stays live.
 
-Use the **file `index.html`** I prepared (it's your mobile dashboard, just renamed — GitHub Pages looks for a file named exactly `index.html`).
+Upload **all three files together** — they must sit side by side in the repo:
+
+- `index.html` — the app itself
+- `manifest.webmanifest` — makes it installable (name, icon, standalone window)
+- `sw.js` — the service worker (offline + the "Install app" prompt)
 
 The no-code web route below is the easy one. You don't need Git or the command line.
 
@@ -11,7 +15,7 @@ The no-code web route below is the easy one. You don't need Git or the command l
 ## What you need
 
 - A free GitHub account — sign up at https://github.com/signup if you don't have one.
-- The `index.html` file (shared alongside this guide).
+- The three files above (all shared alongside this guide).
 
 ---
 
@@ -24,9 +28,9 @@ The no-code web route below is the easy one. You don't need Git or the command l
 - Tick **Add a README file**
 - Click **Create repository**
 
-**2. Upload the dashboard**
+**2. Upload the app**
 - On the repo page, click **Add file → Upload files**
-- Drag in `index.html` (must be named exactly that)
+- Drag in **all three files** — `index.html`, `manifest.webmanifest`, `sw.js` (keep the exact names)
 - Scroll down, click **Commit changes**
 
 **3. Turn on Pages**
@@ -39,10 +43,11 @@ The no-code web route below is the easy one. You don't need Git or the command l
 - It shows: **"Your site is live at https://yourname.github.io/my-week/"**
 - That link is your dashboard. Open it on your phone.
 
-**5. Add to your phone's home screen**
+**5. Install it as an app**
 - Open the link in **Chrome** on your Samsung
-- Menu (⋮) → **Add to Home screen** → **Add**
-- It launches full-screen like an app, with its own **green icon** (built into the file — nothing extra to set up).
+- Menu (⋮) → look for **Install app** (or **Add to Home screen**) → **Install**
+- It installs like a real app: its own **green icon** in your app drawer, opens in its own window (no browser bar), and works offline.
+- *Tip:* the "Install app" option may take a few seconds to appear on first visit while the service worker registers. If you only see "Add to Home screen," that also works.
 
 **6. First open — the setup wizard**
 - The very first time you open it, you'll see **"Set up your week."** It's pre-filled with a sensible starter, so you can just tap **Save my week** to begin, then fine-tune anytime via the **⚙️** button.
@@ -72,8 +77,8 @@ Then enable Pages the same way as Route A, step 3.
 
 When I give you a new version of the dashboard (e.g. refreshed cycle dates, or a new feature):
 
-- Repo → click the old **`index.html`** → the **pencil (Edit)** icon → delete all, paste the new contents → **Commit**.
-- *Or* **Add file → Upload files**, drop the new `index.html`, and confirm "replace." Live within a minute.
+- **Add file → Upload files**, drop the new `index.html` (or whichever files changed), and confirm "replace." Live within a minute.
+- The app is **network-first**, so the next time you open it online it fetches the new version automatically — no need to reinstall. (If it ever looks stale, close and reopen it while online.)
 
 ### Will updating the file wipe my settings? No.
 
