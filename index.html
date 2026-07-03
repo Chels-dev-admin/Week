@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="My Week">
+<meta name="theme-color" content="#5a927a">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAOE0lEQVR4nO3dT5IkVQHA4eyJPMIcAd2KXgLQIBSX7gUNQHEHDIZBCOgOFYxQD4GuhFM44RY5AndoF7DomemurursynxVv++LyN3E9MuIly9/9epPXvzsL+9eTgBAynx56f4PADUPth4AALA+AQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACJonDwMEgBw7AAAQJAAAIGievAcAADmz2z8A9HgLAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABHkcMAAE2QEAgCABAABBAgAAggQAAATNk08BAkCOHQAACBIAABA0ewMAAHrsAABAkAAAgCABAABBAgAAggQAAAR5GiAABNkBAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgaJ78EAAA5NgBAIAgAQAAQQIAAIIEAAAEzT4CCAA9dgAAIMjjgAEgyA4AAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAATNk58CBIAcOwAAECQAACBIAABAkAAAgCCPAwaAIDsAABA02wAAgB47AAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQNE8eBgAAOXYAACDI0wABIMgOAAAECQAACBIAABAkAAAgSAAAQJAAAICg2bcAAaDHDgAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEHzdOmXAACgxg4AAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAImv0QMAD02AEAgCABAABB8+Q9AADIsQMAAEECAACC5sl7AACQYwcAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACPI4YAAImt3/AaDHWwAAECQAACBIAABA0Dz5FCAA5NgBAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgjwMGgCA7AAAQJAAAIEgAAECQAACAoNlnAAGgxw4AAATNk+8BAkCOHQAACJq3HgDn5bO3P/76tn/z0z/+5uEaY9nCPucPS5zz9cO6Ll75w1veA2CRJTe9c1jM3PTZyjlcP2xHAHBn93njO8WFzI2f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">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAOE0lEQVR4nO3dT5IkVQHA4eyJPMIcAd2KXgLQIBSX7gUNQHEHDIZBCOgOFYxQD4GuhFM44RY5AndoF7DomemurursynxVv++LyN3E9MuIly9/9epPXvzsL+9eTgBAynx56f4PADUPth4AALA+AQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACJonDwMEgBw7AAAQJAAAIGievAcAADmz2z8A9HgLAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABHkcMAAE2QEAgCABAABBAgAAggQAAATNk08BAkCOHQAACBIAABA0ewMAAHrsAABAkAAAgCABAABBAgAAggQAAAR5GiAABNkBAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgaJ78EAAA5NgBAIAgAQAAQQIAAIIEAAAEzT4CCAA9dgAAIMjjgAEgyA4AAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAATNk58CBIAcOwAAECQAACBIAABAkAAAgCCPAwaAIDsAABA02wAAgB47AAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQNE8eBgAAOXYAACDI0wABIMgOAAAECQAACBIAABAkAAAgSAAAQJAAAICg2bcAAaDHDgAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEHzdOmXAACgxg4AAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAImv0QMAD02AEAgCABAABB8+Q9AADIsQMAAEECAACC5sl7AACQYwcAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACPI4YAAImt3/AaDHWwAAECQAACBIAABA0Dz5FCAA5NgBAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgjwMGgCA7AAAQJAAAIEgAAECQAACAoNlnAAGgxw4AAATNk+8BAkCOHQAACJq3HgDn5bO3P/76tn/z0z/+5uEaY9nCPucPS5zz9cO6Ll75w1veA2CRJTe9c1jM3PTZyjlcP2xHAHBn93njO8WFzI2f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">
+<title>My Week</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f6f5f2; color: #2b2b2b; line-height: 1.45; -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 720px; margin: 0 auto; padding: max(14px, env(safe-area-inset-top)) 14px calc(44px + env(safe-area-inset-bottom)); }
+
+.top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.top .lbl { font-size:12px; font-weight:800; letter-spacing:.06em; color:#8a8a8a; }
+.top .rt { display:flex; align-items:center; gap:10px; }
+.top .clock { font-variant-numeric:tabular-nums; font-size:14px; color:#9a9a9a; }
+.gear { background:none; border:none; font-size:20px; cursor:pointer; padding:2px; line-height:1; }
+
+/* Date navigator */
+.nav { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+.nav button { border:1px solid #d8d4cc; background:#fff; border-radius:12px; padding:10px 14px; font-size:18px; cursor:pointer; font-weight:700; color:#5a5a5a; }
+.nav .lblwrap { flex:1; text-align:center; }
+.nav .navdate { font-size:15px; font-weight:800; }
+.nav .today { font-size:11px; color:#a0803f; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+.nav .todaybtn { font-size:12px; padding:10px 12px; }
+
+.banner { border-radius:18px; padding:18px; color:#fff; margin-bottom:14px; }
+.banner .d { font-size:13px; opacity:.9; }
+.banner .type { font-size:26px; font-weight:800; line-height:1.1; margin:3px 0; }
+.banner .mode { font-size:14px; opacity:.92; }
+.office { background:linear-gradient(135deg,#5b7a9d,#43617f); }
+.home   { background:linear-gradient(135deg,#5a927a,#3f6f5c); }
+.weekend{ background:linear-gradient(135deg,#a9784f,#8a5f3c); }
+
+.now { background:#fff; border:1px solid #e7e4de; border-radius:16px; padding:16px 18px; margin-bottom:12px; }
+.now .l { font-size:11px; text-transform:uppercase; letter-spacing:.09em; color:#a08b6b; font-weight:800; }
+.now .act { font-size:20px; font-weight:700; margin:6px 0 4px; line-height:1.25; }
+.now .win { font-size:13px; color:#9a9a9a; }
+.now .then { font-size:14px; color:#7a7a7a; margin-top:10px; padding-top:10px; border-top:1px solid #f0ede7; }
+.now .then b { color:#5a5a5a; }
+
+.cyc { background:#fff; border:1px solid #e7e4de; border-left:5px solid #ccc; border-radius:16px; padding:16px 18px; margin-bottom:12px; }
+.cyc .hd { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+.cyc .ph { font-size:18px; font-weight:800; }
+.cyc .dy { font-size:12px; color:#9a9a9a; font-weight:700; white-space:nowrap; }
+.cyc .dots { margin:4px 0 10px; font-size:13px; color:#c8912f; letter-spacing:3px; }
+.cyc .tip { font-size:14px; margin:8px 0; }
+.cyc .tip b { color:#8a6f45; }
+.cyc .disc { font-size:11px; color:#b5b0a6; margin-top:8px; }
+
+.toggle { width:100%; border:none; border-radius:14px; padding:14px; font-size:15px; font-weight:700; background:#efe9dd; color:#7a613a; margin-bottom:16px; cursor:pointer; }
+.toggle.on { background:#2b2b2b; color:#fff; }
+
+.sec { font-size:11px; text-transform:uppercase; letter-spacing:.09em; color:#9a9a9a; font-weight:800; margin:20px 4px 8px; }
+
+.tl { list-style:none; margin:0; padding:0; }
+.tl li { display:flex; gap:12px; padding:11px 14px; border-radius:12px; align-items:flex-start; }
+.tl li .t { font-variant-numeric:tabular-nums; font-size:14px; color:#9a9a9a; min-width:64px; padding-top:1px; font-weight:700; }
+.tl li .b { font-size:15px; }
+.tl li.cur { background:#fff; border:1px solid #d7cbb0; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+.tl li.cur .b { font-weight:700; }
+.tl li.cur .t { color:#a0803f; }
+.tl li.past { opacity:.34; }
+.tag { display:inline-block; font-size:11px; background:#efe9dd; color:#8a6f45; padding:1px 7px; border-radius:6px; margin-left:5px; font-weight:700; }
+
+.mvd { background:#fbf6ec; border:1px solid #ecdcba; border-radius:16px; padding:16px 18px; }
+.mvd h3 { margin:0 0 10px; font-size:16px; }
+.mvd ul { margin:0; padding-left:20px; }
+.mvd li { margin:6px 0; font-size:16px; }
+.mvd p { font-size:13px; color:#8a7a5a; margin:12px 0 0; }
+
+.week { }
+.wday { display:grid; grid-template-columns:42px 60px 1fr; gap:8px; align-items:center; background:#fff; border:1px solid #e7e4de; border-radius:11px; padding:10px 12px; font-size:13px; margin-bottom:6px; cursor:pointer; }
+.wday.today { border-color:#cbb98f; background:#fffdf7; }
+.wday.view { outline:2px solid #cbb98f; }
+.wday .dd { font-weight:800; }
+.wday .ty { font-size:10px; text-transform:uppercase; font-weight:800; letter-spacing:.03em; }
+.wday .ty.office{color:#43617f;} .wday .ty.home{color:#3f6f5c;} .wday .ty.weekend{color:#8a5f3c;}
+.wday .c { color:#6b6b6b; }
+
+.foot { text-align:center; font-size:11px; color:#bab5ab; margin-top:24px; }
+
+/* ---- Config screen ---- */
+#config { display:none; }
+.chero { margin:6px 0 16px; }
+.chero h2 { font-size:22px; margin:0 0 4px; }
+.chero p { font-size:13px; color:#8a8a8a; margin:0; }
+.card { background:#fff; border:1px solid #e7e4de; border-radius:16px; padding:16px 18px; margin-bottom:14px; }
+.card h3 { font-size:15px; margin:0 0 4px; }
+.card .hint { font-size:12px; color:#9a9a9a; margin:0 0 12px; }
+.fld { margin:10px 0; }
+.fld label { font-size:13px; font-weight:600; display:block; margin-bottom:4px; }
+.fld input[type=text], .fld input[type=time], .fld input[type=number], .fld input[type=date] {
+  width:100%; padding:11px; border:1px solid #d8d4cc; border-radius:10px; font-size:15px; background:#fff; }
+.two { display:flex; gap:10px; } .two > div { flex:1; }
+.chips { display:flex; flex-wrap:wrap; gap:6px; }
+.chip { border:1px solid #d8d4cc; background:#fff; border-radius:999px; padding:8px 12px; font-size:13px; cursor:pointer; font-weight:600; color:#7a7a7a; }
+.chip.on { background:#5a927a; color:#fff; border-color:#5a927a; }
+.chip.on.off2 { background:#43617f; border-color:#43617f; }
+
+.tabs { display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap; }
+.tab { border:1px solid #d8d4cc; background:#fff; border-radius:999px; padding:8px 12px; font-size:13px; cursor:pointer; font-weight:700; color:#7a7a7a; }
+.tab.on { background:#2b2b2b; color:#fff; border-color:#2b2b2b; }
+.blockrow { display:flex; gap:6px; align-items:center; margin-bottom:6px; }
+.blockrow input[type=time] { width:96px; padding:9px; border:1px solid #d8d4cc; border-radius:8px; font-size:14px; }
+.blockrow input.txt { flex:1; padding:9px; border:1px solid #d8d4cc; border-radius:8px; font-size:14px; }
+.blockrow .del { border:none; background:#f2ece1; color:#a06; border-radius:8px; width:34px; height:36px; font-size:16px; cursor:pointer; color:#b07; }
+.addrow { border:1px dashed #cbb98f; background:#fbf6ec; color:#8a6f45; border-radius:10px; padding:10px; width:100%; font-size:13px; font-weight:700; cursor:pointer; margin-top:4px; }
+.metafld { display:flex; gap:10px; margin-top:10px; }
+.listrow { display:flex; gap:6px; margin-bottom:6px; }
+.listrow input { flex:1; padding:9px; border:1px solid #d8d4cc; border-radius:8px; font-size:14px; }
+.listrow .del { border:none; background:#f2ece1; color:#b07; border-radius:8px; width:34px; height:36px; font-size:16px; cursor:pointer; }
+.savebar { position:sticky; bottom:0; background:linear-gradient(180deg, rgba(246,245,242,0), #f6f5f2 30%); padding:14px 0 6px; display:flex; gap:10px; }
+.savebar button { flex:1; padding:14px; border:none; border-radius:12px; font-size:15px; font-weight:800; cursor:pointer; }
+.savebar .save { background:#5a927a; color:#fff; }
+.savebar .cancel { background:#eee; color:#777; flex:0 0 96px; }
+.mini { background:none; border:none; color:#9a9a9a; text-decoration:underline; font-size:12px; cursor:pointer; padding:8px 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ APP ============ -->
+  <div id="app" style="display:none;">
+    <div class="top">
+      <span class="lbl" id="apptitle">MY WEEK</span>
+      <span class="rt"><span class="clock" id="clock"></span><button class="gear" id="gear" title="Settings">⚙️</button></span>
+    </div>
+
+    <div class="nav">
+      <button id="prev">‹</button>
+      <div class="lblwrap">
+        <div class="navdate" id="navdate"></div>
+        <div class="today" id="navtoday"></div>
+      </div>
+      <button id="next">›</button>
+      <button class="todaybtn" id="todaybtn">Today</button>
+    </div>
+
+    <div class="banner" id="banner">
+      <div class="d" id="bdate"></div>
+      <div class="type" id="btype"></div>
+      <div class="mode" id="bmode"></div>
+    </div>
+
+    <div class="now" id="nowcard">
+      <div class="l" id="nowlbl">Right now</div>
+      <div class="act" id="act">—</div>
+      <div class="win" id="win"></div>
+      <div class="then" id="then"></div>
+    </div>
+
+    <div class="cyc" id="cyccard" style="display:none;">
+      <div class="hd"><span class="ph" id="cycph"></span><span class="dy" id="cycdy"></span></div>
+      <div class="dots" id="cycdots"></div>
+      <div class="tip"><b>Move:</b> <span id="cycmove"></span></div>
+      <div class="tip"><b>Mind:</b> <span id="cycmind"></span></div>
+      <div class="tip"><b>Care:</b> <span id="cyccare"></span></div>
+      <div class="disc">Anchors don't move — this only nudges the flexible layers. Individual; a gentle guide, not a rule.</div>
+    </div>
+
+    <button class="toggle" id="lowbtn">🔋 Low energy — show minimum day</button>
+
+    <div id="full">
+      <div class="sec" id="plansec">Plan</div>
+      <ul class="tl" id="timeline"></ul>
+    </div>
+    <div id="mvd" style="display:none;">
+      <div class="sec">Minimum viable day</div>
+      <div class="mvd">
+        <h3>Hit these = today is a win.</h3>
+        <ul id="mvdlist"></ul>
+        <p>An off-day isn't an off-week. Everything else rolls forward — no cramming, no guilt.</p>
+      </div>
+    </div>
+
+    <div class="sec">This week — tap a day</div>
+    <div class="week" id="week"></div>
+
+    <div class="foot">Structure carries you, so willpower doesn't have to.</div>
+  </div>
+
+  <!-- ============ CONFIG ============ -->
+  <div id="config">
+    <div class="chero">
+      <h2 id="ctitle">Set up your week</h2>
+      <p id="csub">Everything below is pre-filled with a sensible starter. Change what you like — you can edit it all again anytime from ⚙️.</p>
+    </div>
+
+    <div class="card">
+      <h3>About</h3>
+      <div class="fld"><label>Your name (optional)</label><input type="text" id="c_name" placeholder="e.g. Alex"></div>
+    </div>
+
+    <div class="card">
+      <h3>Work &amp; commute</h3>
+      <p class="hint">This decides which days are office / home / weekend.</p>
+      <div class="two">
+        <div class="fld"><label>Work starts</label><input type="time" id="c_ws"></div>
+        <div class="fld"><label>Work ends</label><input type="time" id="c_we"></div>
+      </div>
+      <div class="fld"><label>Work days</label><div class="chips" id="c_workdays"></div></div>
+      <div class="fld"><label>Office (commute) days</label><div class="chips" id="c_officedays"></div></div>
+      <div class="two">
+        <div class="fld"><label>Commute each way (min)</label><input type="number" id="c_commute" min="0" max="240"></div>
+        <div class="fld"><label>&nbsp;</label></div>
+      </div>
+      <div class="two">
+        <div class="fld"><label>Lunch from</label><input type="time" id="c_ls"></div>
+        <div class="fld"><label>Lunch to</label><input type="time" id="c_le"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Day plans</h3>
+      <p class="hint">The blocks for each kind of day. Edit the time or text, add or remove blocks — they auto-sort by time when you save. These are your responsibilities &amp; anchors.</p>
+      <div class="tabs" id="tmpl_tabs"></div>
+      <div class="metafld two">
+        <div class="fld" style="flex:1"><label>Day label</label><input type="text" id="m_label"></div>
+      </div>
+      <div class="fld"><label>Mode / subtitle</label><input type="text" id="m_mode"></div>
+      <div class="fld"><label>“Carries” (week-grid summary)</label><input type="text" id="m_carries"></div>
+      <div class="fld"><label>Blocks</label><div id="blocks"></div>
+        <button class="addrow" id="addblock">+ Add block</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Minimum viable day</h3>
+      <p class="hint">The essentials that count as a win on a hard day.</p>
+      <div id="essentials"></div>
+      <button class="addrow" id="addess">+ Add essential</button>
+    </div>
+
+    <div class="card">
+      <h3>🌙 Cycle-aware plan (optional)</h3>
+      <p class="hint">If you menstruate, this tunes exercise / study / social / self-care to your phase. Leave off to hide it.</p>
+      <div class="fld"><label><input type="checkbox" id="c_cyc_on"> Enable cycle tracking</label></div>
+      <div id="cycfields">
+        <div class="fld"><label>First day of last period</label><input type="date" id="c_cyc_start"></div>
+        <div class="two">
+          <div class="fld"><label>Cycle length</label><input type="number" id="c_cyc_len" min="20" max="45"></div>
+          <div class="fld"><label>Period length</label><input type="number" id="c_cyc_per" min="2" max="10"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Backup / Restore</h3>
+      <p class="hint">Export your setup to a file (also handy for copying between phone and computer), or restore it. Export saves your last <b>saved</b> setup, so tap “Save my week” first if you've just made changes.</p>
+      <button class="addrow" id="exportbtn">⬇ Export my setup</button>
+      <button class="addrow" id="importbtn">⬆ Import from a backup file</button>
+      <input type="file" id="importfile" accept="application/json,.json" style="display:none">
+    </div>
+
+    <button class="mini" id="resetdefaults">Reset everything to the starter example</button>
+
+    <div class="savebar">
+      <button class="cancel" id="cancel" style="display:none;">Cancel</button>
+      <button class="save" id="save">Save my week</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============ Defaults ============
+const DOW_ORDER=[1,2,3,4,5,6,0];
+const DOW_SHORT={0:"Sun",1:"Mon",2:"Tue",3:"Wed",4:"Thu",5:"Fri",6:"Sat"};
+
+function defTemplates(){return {
+ office:{label:"Office day", mode:"Survival + recovery mode", carries:"Survival · animals · gentle movement", blocks:[
+  {t:"05:00",b:"Wake · meds/water · feed animals · litter scoop",tag:""},
+  {t:"05:20",b:"Short dog walk (15–20 min)",tag:""},
+  {t:"05:45",b:"Get ready · grab pre-prepped breakfast, lunch + bag",tag:""},
+  {t:"06:00",b:"Leave — commute (headphones / podcast / audio study)",tag:""},
+  {t:"08:00",b:"Work · lunch: eat + short walk",tag:""},
+  {t:"16:00",b:"Commute home",tag:""},
+  {t:"18:00",b:"Arrive — 15–20 min decompression. No demands.",tag:"protected"},
+  {t:"18:20",b:"Longer dog walk + animal care",tag:""},
+  {t:"19:00",b:"Reheat dinner (no cooking)",tag:""},
+  {t:"19:45",b:"10-min home reset (timer)",tag:""},
+  {t:"20:00",b:"Wind-down: screens down, prep tomorrow",tag:"protected"},
+  {t:"21:00",b:"Bed — aim ~8 hrs",tag:""} ]},
+ home:{label:"Home day", mode:"Workhorse mode", carries:"Study · exercise · animal play", blocks:[
+  {t:"05:30",b:"Wake · feed animals · litter",tag:""},
+  {t:"06:15",b:"Dog walk (20–30 min)",tag:""},
+  {t:"06:45",b:"Reclaimed block: exercise OR study (25–45 min)",tag:""},
+  {t:"08:00",b:"Work · lunch: real break",tag:""},
+  {t:"16:00",b:"Transition buffer",tag:"protected"},
+  {t:"16:20",b:"Second block: study / exercise / batch-cook",tag:""},
+  {t:"18:00",b:"Dinner",tag:""},
+  {t:"18:45",b:"Main dog walk + play",tag:""},
+  {t:"19:30",b:"One cleaning zone — 15 min timer",tag:""},
+  {t:"20:00",b:"Wind-down",tag:""},
+  {t:"21:30",b:"Bed",tag:""} ]},
+ sat:{label:"Weekend", mode:"Big-movement + errands day", carries:"Long activity · groceries · deep-clean · social", blocks:[
+  {t:"07:00",b:"Wake · feed animals · litter · coffee",tag:""},
+  {t:"07:30",b:"Long activity: hike / long walk + strength",tag:""},
+  {t:"10:00",b:"Grocery shop for the week",tag:""},
+  {t:"12:00",b:"Lunch + rest",tag:""},
+  {t:"13:00",b:"One deeper cleaning zone (timed)",tag:""},
+  {t:"14:00",b:"Slot B: social / hobby / creative",tag:"slot"},
+  {t:"17:00",b:"Dinner + evening dog walk",tag:""},
+  {t:"20:00",b:"Wind-down",tag:""},
+  {t:"21:30",b:"Bed",tag:""} ]},
+ sun:{label:"Weekend", mode:"Reset day — cook, gentle move, plan, rest", carries:"Batch-cook · yoga · study · reset", blocks:[
+  {t:"07:00",b:"Wake · feed animals · litter",tag:""},
+  {t:"07:30",b:"Gentle exercise: yoga / mobility",tag:""},
+  {t:"09:00",b:"Batch-cook the week's meals",tag:""},
+  {t:"12:00",b:"Lunch",tag:""},
+  {t:"13:00",b:"Study block (~1.5 hr, timed)",tag:""},
+  {t:"15:00",b:"Next-week reset: plan + prep tomorrow",tag:""},
+  {t:"16:00",b:"Genuine downtime / rest",tag:"protected"},
+  {t:"17:30",b:"Dinner + dog walk",tag:""},
+  {t:"20:00",b:"Wind-down",tag:""},
+  {t:"21:00",b:"Bed",tag:""} ]},
+};}
+
+function defConfig(){return {
+ name:"",
+ workStart:"08:00", workEnd:"16:00",
+ workDays:[1,2,3,4,5], officeDays:[1,3,5],
+ commute:120, lunchStart:"11:00", lunchEnd:"12:00",
+ templates:defTemplates(),
+ essentials:["Animals fed + litter","Dogs walked (short is fine)","You fed","Water + meds","You sleep"],
+ cycle:{enabled:false, start:"", len:28, period:5}
+};}
+
+const PHASES={
+ menstrual:{label:"Menstrual",emoji:"🩸",color:"#a8434f",energy:2,
+  move:"Swap hard strength/cardio for gentle — walks, yoga, mobility. Baseline walks stay.",
+  mind:"Keep study light or audio-only. Minimum viable day counts double.",
+  care:"Rest, warmth, iron-rich food, more sleep. No guilt for doing less."},
+ follicular:{label:"Follicular",emoji:"🌱",color:"#3f6f5c",energy:4,
+  move:"Energy's rising — progress strength, try new movement.",
+  mind:"Sharpest focus. Tackle harder study; good time to start new projects.",
+  care:"Use the momentum — but keep your anchors and buffers."},
+ ovulatory:{label:"Ovulatory",emoji:"☀️",color:"#c8912f",energy:5,
+  move:"Strongest days — hardest workouts, long activity, heavy strength.",
+  mind:"Most social + verbal. Best window for social plans.",
+  care:"High energy — but protect sleep + decompression as always."},
+ luteal_early:{label:"Early luteal",emoji:"🍂",color:"#a9784f",energy:3,
+  move:"Still solid — steady sessions, start easing intensity down.",
+  mind:"Better for finishing + consolidating than starting new things.",
+  care:"Appetite rises — lean on batch-cooked meals; keep routines steady."},
+ luteal_late:{label:"Late luteal (PMS)",emoji:"🌘",color:"#6b5b8a",energy:2,
+  move:"Dial exercise back to gentle. Don't force hard sessions.",
+  mind:"Cut study first if overloaded. Expect lower focus + more sensitivity.",
+  care:"Overwhelm hits hardest now — guard decompression + sleep, comfort food, extra kindness."},
+};
+
+// ============ State ============
+let cfg=null;
+let viewDate=new Date();
+let low=false;
+let editTmpl='office';
+
+function loadConfig(){ try{ const s=localStorage.getItem('wos_config_v2'); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function saveConfig(c){ localStorage.setItem('wos_config_v2', JSON.stringify(c)); }
+
+// ============ Helpers ============
+function toMin(hhmm){ const p=(hhmm||"0:0").split(':'); return (parseInt(p[0])||0)*60+(parseInt(p[1])||0); }
+function fmt(hhmm){ let m=toMin(hhmm); let h=Math.floor(m/60), mm=m%60; const ap=h<12?'am':'pm'; let h12=h%12; if(h12===0)h12=12; return h12+(mm?':'+String(mm).padStart(2,'0'):'')+ap; }
+function sameDay(a,b){ return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate(); }
+function startOfWeekMon(d){ const x=new Date(d); const dow=x.getDay(); const diff=(dow===0?-6:1-dow); x.setDate(x.getDate()+diff); x.setHours(0,0,0,0); return x; }
+
+function typeForDow(dow){
+  if(cfg.officeDays.includes(dow)) return 'office';
+  if(cfg.workDays.includes(dow)) return 'home';
+  if(dow===0) return 'sun';
+  return 'sat';
+}
+function bannerClass(tKey){ return (tKey==='office')?'office':(tKey==='home')?'home':'weekend'; }
+function tmplFor(dow){ return cfg.templates[typeForDow(dow)]; }
+
+// ============ Cycle ============
+function cycleFor(date){
+  if(!cfg.cycle.enabled || !cfg.cycle.start) return null;
+  const L=parseInt(cfg.cycle.len)||28, P=parseInt(cfg.cycle.period)||5;
+  const s=new Date(cfg.cycle.start+'T00:00:00');
+  const d=new Date(date); d.setHours(0,0,0,0);
+  let diff=Math.floor((d-s)/86400000); if(diff<0) diff=0;
+  let day=(diff%L)+1;
+  const ovDay=Math.max(L-14,P+2), ovS=ovDay-1, ovE=ovDay+1;
+  let key = day<=P?'menstrual' : day<ovS?'follicular' : day<=ovE?'ovulatory' : day<=L-4?'luteal_early' : 'luteal_late';
+  return Object.assign({day:day,L:L}, PHASES[key]);
+}
+
+// ============ Render app ============
+function render(){
+  const now=new Date();
+  document.getElementById('clock').textContent=now.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+  document.getElementById('apptitle').textContent=(cfg.name?cfg.name.toUpperCase()+"'S WEEK":"MY WEEK");
+
+  const dow=viewDate.getDay();
+  const tKey=typeForDow(dow);
+  const meta=cfg.templates[tKey];
+  const isToday=sameDay(viewDate,now);
+
+  // nav
+  document.getElementById('navdate').textContent=viewDate.toLocaleDateString([], {weekday:'long', month:'short', day:'numeric'});
+  document.getElementById('navtoday').textContent=isToday?'Today':'';
+
+  // banner
+  document.getElementById('banner').className='banner '+bannerClass(tKey);
+  document.getElementById('bdate').textContent=viewDate.toLocaleDateString([], {weekday:'long', month:'long', day:'numeric'});
+  document.getElementById('btype').textContent=meta.label;
+  document.getElementById('bmode').textContent=meta.mode;
+
+  // sorted blocks
+  const blocks=meta.blocks.slice().sort((a,b)=>toMin(a.t)-toMin(b.t));
+  const nm=now.getHours()*60+now.getMinutes();
+  let cur=-1;
+  if(isToday){ for(let i=0;i<blocks.length;i++){ if(nm>=toMin(blocks[i].t)) cur=i; } }
+
+  // now card
+  const act=document.getElementById('act'), win=document.getElementById('win'), then=document.getElementById('then');
+  document.getElementById('nowlbl').textContent=isToday?'Right now':'Planned day';
+  if(isToday){
+    if(cur===-1){ const f=blocks[0]; act.textContent="First up: "+(f?f.b:'—'); win.textContent=f?("From "+fmt(f.t)):""; then.textContent=""; }
+    else{ const c=blocks[cur]; act.textContent=c.b; win.textContent="Started "+fmt(c.t);
+      const nx=blocks[cur+1]; then.innerHTML=nx?("<b>Then "+fmt(nx.t)+":</b> "+nx.b):"Last block — rest well."; }
+  } else {
+    act.textContent=meta.label+" — "+meta.mode;
+    win.textContent=blocks.length+" blocks planned";
+    const f=blocks[0]; then.innerHTML=f?("<b>Starts "+fmt(f.t)+":</b> "+f.b):"";
+  }
+
+  // cycle
+  renderCycleCard();
+
+  // timeline
+  const tl=document.getElementById('timeline'); tl.innerHTML="";
+  document.getElementById('plansec').textContent=isToday?"Today's plan":(viewDate.toLocaleDateString([], {weekday:'long'})+"'s plan");
+  blocks.forEach((blk,i)=>{
+    const li=document.createElement('li');
+    if(isToday && i<cur) li.className='past';
+    if(isToday && i===cur) li.className='cur';
+    const tag=blk.tag?(' <span class="tag">'+blk.tag+'</span>'):'';
+    li.innerHTML='<span class="t">'+fmt(blk.t)+'</span><span class="b">'+escapeHtml(blk.b)+tag+'</span>';
+    tl.appendChild(li);
+  });
+
+  // MVD list
+  const ml=document.getElementById('mvdlist'); ml.innerHTML="";
+  cfg.essentials.forEach(e=>{ const li=document.createElement('li'); li.textContent=e; ml.appendChild(li); });
+
+  // week grid
+  const wk=document.getElementById('week'); wk.innerHTML="";
+  const mon=startOfWeekMon(now);
+  for(let i=0;i<7;i++){
+    const d=new Date(mon); d.setDate(mon.getDate()+i);
+    const dd=d.getDay(); const tk=typeForDow(dd); const m=cfg.templates[tk];
+    const el=document.createElement('div');
+    el.className='wday'+(sameDay(d,now)?' today':'')+(sameDay(d,viewDate)?' view':'');
+    el.innerHTML='<span class="dd">'+DOW_SHORT[dd]+'</span>'+
+      '<span class="ty '+bannerClass(tk)+'">'+shortType(tk)+'</span>'+
+      '<span class="c">'+escapeHtml(m.carries)+'</span>';
+    el.addEventListener('click',()=>{ viewDate=new Date(d); render(); window.scrollTo({top:0,behavior:'smooth'}); });
+    wk.appendChild(el);
+  }
+}
+function shortType(tk){ return tk==='office'?'Office':tk==='home'?'Home':'Wknd'; }
+function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderCycleCard(){
+  const card=document.getElementById('cyccard');
+  const c=cycleFor(viewDate);
+  if(!c){ card.style.display='none'; return; }
+  card.style.display='block'; card.style.borderLeftColor=c.color;
+  const ph=document.getElementById('cycph'); ph.textContent=c.emoji+" "+c.label; ph.style.color=c.color;
+  document.getElementById('cycdy').textContent="Day "+c.day+" · ~"+c.L+"-day cycle";
+  document.getElementById('cycdots').textContent="●".repeat(c.energy)+"○".repeat(5-c.energy)+"  energy";
+  document.getElementById('cycmove').textContent=c.move;
+  document.getElementById('cycmind').textContent=c.mind;
+  document.getElementById('cyccare').textContent=c.care;
+}
+
+// ============ Config screen ============
+function dayChips(containerId, selected, offStyle){
+  const c=document.getElementById(containerId); c.innerHTML="";
+  DOW_ORDER.forEach(dow=>{
+    const b=document.createElement('button'); b.type='button';
+    b.className='chip'+(selected.includes(dow)?' on'+(offStyle?' off2':''):''); b.textContent=DOW_SHORT[dow];
+    b.addEventListener('click',()=>{ const i=selected.indexOf(dow); if(i>=0)selected.splice(i,1); else selected.push(dow); dayChips(containerId,selected,offStyle); });
+    c.appendChild(b);
+  });
+}
+
+let formCfg=null; // working copy while editing
+
+function openConfig(isFirst){
+  formCfg=JSON.parse(JSON.stringify(cfg||defConfig()));
+  document.getElementById('app').style.display='none';
+  document.getElementById('config').style.display='block';
+  document.getElementById('ctitle').textContent=isFirst?'Set up your week':'Settings';
+  document.getElementById('csub').style.display=isFirst?'block':'none';
+  document.getElementById('cancel').style.display=isFirst?'none':'block';
+
+  document.getElementById('c_name').value=formCfg.name||"";
+  document.getElementById('c_ws').value=formCfg.workStart; document.getElementById('c_we').value=formCfg.workEnd;
+  document.getElementById('c_commute').value=formCfg.commute;
+  document.getElementById('c_ls').value=formCfg.lunchStart; document.getElementById('c_le').value=formCfg.lunchEnd;
+  dayChips('c_workdays', formCfg.workDays, false);
+  dayChips('c_officedays', formCfg.officeDays, true);
+
+  buildTabs(); editTmpl='office'; loadTmplEditor();
+
+  renderEssentials();
+
+  document.getElementById('c_cyc_on').checked=!!formCfg.cycle.enabled;
+  document.getElementById('c_cyc_start').value=formCfg.cycle.start||"";
+  document.getElementById('c_cyc_len').value=formCfg.cycle.len||28;
+  document.getElementById('c_cyc_per').value=formCfg.cycle.period||5;
+  toggleCycFields();
+  window.scrollTo(0,0);
+}
+
+function buildTabs(){
+  const t=document.getElementById('tmpl_tabs'); t.innerHTML="";
+  [['office','Office day'],['home','Home day'],['sat','Saturday'],['sun','Sunday']].forEach(([k,lbl])=>{
+    const b=document.createElement('button'); b.type='button'; b.className='tab'+(k===editTmpl?' on':''); b.textContent=lbl;
+    b.addEventListener('click',()=>{ saveTmplMeta(); editTmpl=k; buildTabs(); loadTmplEditor(); });
+    t.appendChild(b);
+  });
+}
+function loadTmplEditor(){
+  const tm=formCfg.templates[editTmpl];
+  document.getElementById('m_label').value=tm.label;
+  document.getElementById('m_mode').value=tm.mode;
+  document.getElementById('m_carries').value=tm.carries;
+  const box=document.getElementById('blocks'); box.innerHTML="";
+  tm.blocks.forEach((blk,idx)=> box.appendChild(blockRow(blk,idx)));
+}
+function blockRow(blk,idx){
+  const row=document.createElement('div'); row.className='blockrow';
+  const tinp=document.createElement('input'); tinp.type='time'; tinp.value=blk.t;
+  tinp.addEventListener('change',()=>{ formCfg.templates[editTmpl].blocks[idx].t=tinp.value; });
+  const txt=document.createElement('input'); txt.type='text'; txt.className='txt'; txt.value=blk.b; txt.placeholder='Activity';
+  txt.addEventListener('input',()=>{ formCfg.templates[editTmpl].blocks[idx].b=txt.value; });
+  const del=document.createElement('button'); del.type='button'; del.className='del'; del.textContent='×';
+  del.addEventListener('click',()=>{ formCfg.templates[editTmpl].blocks.splice(idx,1); loadTmplEditor(); });
+  row.appendChild(tinp); row.appendChild(txt); row.appendChild(del);
+  return row;
+}
+function saveTmplMeta(){
+  const tm=formCfg.templates[editTmpl];
+  tm.label=document.getElementById('m_label').value;
+  tm.mode=document.getElementById('m_mode').value;
+  tm.carries=document.getElementById('m_carries').value;
+}
+
+function renderEssentials(){
+  const box=document.getElementById('essentials'); box.innerHTML="";
+  formCfg.essentials.forEach((e,idx)=>{
+    const row=document.createElement('div'); row.className='listrow';
+    const inp=document.createElement('input'); inp.type='text'; inp.value=e;
+    inp.addEventListener('input',()=>{ formCfg.essentials[idx]=inp.value; });
+    const del=document.createElement('button'); del.type='button'; del.className='del'; del.textContent='×';
+    del.addEventListener('click',()=>{ formCfg.essentials.splice(idx,1); renderEssentials(); });
+    row.appendChild(inp); row.appendChild(del); box.appendChild(row);
+  });
+}
+function toggleCycFields(){ document.getElementById('cycfields').style.display=document.getElementById('c_cyc_on').checked?'block':'none'; }
+
+function collectAndSave(){
+  saveTmplMeta();
+  formCfg.name=document.getElementById('c_name').value.trim();
+  formCfg.workStart=document.getElementById('c_ws').value||"08:00";
+  formCfg.workEnd=document.getElementById('c_we').value||"16:00";
+  formCfg.commute=parseInt(document.getElementById('c_commute').value)||0;
+  formCfg.lunchStart=document.getElementById('c_ls').value||"11:00";
+  formCfg.lunchEnd=document.getElementById('c_le').value||"12:00";
+  formCfg.cycle.enabled=document.getElementById('c_cyc_on').checked;
+  formCfg.cycle.start=document.getElementById('c_cyc_start').value||"";
+  formCfg.cycle.len=parseInt(document.getElementById('c_cyc_len').value)||28;
+  formCfg.cycle.period=parseInt(document.getElementById('c_cyc_per').value)||5;
+  // clean empty blocks/essentials
+  Object.keys(formCfg.templates).forEach(k=>{ formCfg.templates[k].blocks=formCfg.templates[k].blocks.filter(b=>b.b&&b.b.trim()); });
+  formCfg.essentials=formCfg.essentials.filter(e=>e&&e.trim());
+  cfg=formCfg; saveConfig(cfg);
+  document.getElementById('config').style.display='none';
+  document.getElementById('app').style.display='block';
+  viewDate=new Date();
+  render();
+}
+
+// ============ Wire up ============
+document.getElementById('gear').addEventListener('click',()=>openConfig(false));
+document.getElementById('prev').addEventListener('click',()=>{ viewDate.setDate(viewDate.getDate()-1); viewDate=new Date(viewDate); render(); });
+document.getElementById('next').addEventListener('click',()=>{ viewDate.setDate(viewDate.getDate()+1); viewDate=new Date(viewDate); render(); });
+document.getElementById('todaybtn').addEventListener('click',()=>{ viewDate=new Date(); render(); });
+document.getElementById('lowbtn').addEventListener('click',()=>{
+  low=!low; const b=document.getElementById('lowbtn'); b.classList.toggle('on',low);
+  b.textContent=low?'↩︎ Back to full day':'🔋 Low energy — show minimum day';
+  document.getElementById('full').style.display=low?'none':'block';
+  document.getElementById('mvd').style.display=low?'block':'none';
+});
+document.getElementById('addblock').addEventListener('click',()=>{ formCfg.templates[editTmpl].blocks.push({t:"12:00",b:"",tag:""}); loadTmplEditor(); });
+document.getElementById('addess').addEventListener('click',()=>{ formCfg.essentials.push(""); renderEssentials(); });
+document.getElementById('c_cyc_on').addEventListener('change',toggleCycFields);
+document.getElementById('exportbtn').addEventListener('click',()=>{
+  const data=JSON.stringify(cfg||formCfg||defConfig(),null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='my-week-backup.json'; document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+});
+document.getElementById('importbtn').addEventListener('click',()=>document.getElementById('importfile').click());
+document.getElementById('importfile').addEventListener('change',(e)=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{ const obj=JSON.parse(r.result);
+    if(!obj || !obj.templates || !obj.templates.office) throw new Error('bad');
+    cfg=obj; saveConfig(cfg);
+    document.getElementById('config').style.display='none';
+    document.getElementById('app').style.display='block';
+    viewDate=new Date(); render();
+    alert('Setup restored from backup.');
+  }catch(err){ alert("That file didn't look like a valid My Week backup."); } };
+  r.readAsText(f);
+  e.target.value='';
+});
+document.getElementById('save').addEventListener('click',collectAndSave);
+document.getElementById('cancel').addEventListener('click',()=>{ document.getElementById('config').style.display='none'; document.getElementById('app').style.display='block'; render(); });
+document.getElementById('resetdefaults').addEventListener('click',()=>{ if(confirm('Reset everything to the starter example? Your current settings will be replaced.')){ formCfg=defConfig(); openConfigFromForm(); } });
+function openConfigFromForm(){ const keep=formCfg; cfg=cfg; // reopen with formCfg values
+  // repopulate fields from formCfg
+  document.getElementById('c_name').value=formCfg.name||"";
+  document.getElementById('c_ws').value=formCfg.workStart; document.getElementById('c_we').value=formCfg.workEnd;
+  document.getElementById('c_commute').value=formCfg.commute;
+  document.getElementById('c_ls').value=formCfg.lunchStart; document.getElementById('c_le').value=formCfg.lunchEnd;
+  dayChips('c_workdays', formCfg.workDays, false); dayChips('c_officedays', formCfg.officeDays, true);
+  editTmpl='office'; buildTabs(); loadTmplEditor(); renderEssentials();
+  document.getElementById('c_cyc_on').checked=!!formCfg.cycle.enabled; toggleCycFields();
+  document.getElementById('c_cyc_start').value=formCfg.cycle.start||"";
+  document.getElementById('c_cyc_len').value=formCfg.cycle.len; document.getElementById('c_cyc_per').value=formCfg.cycle.period;
+}
+
+// ============ Init ============
+cfg=loadConfig();
+if(!cfg){
+  // migrate old cycle keys if present
+  const oldStart=localStorage.getItem('wos_cycle_start');
+  cfg=null;
+  openConfig(true);
+  if(oldStart){ document.getElementById('c_cyc_on').checked=true; toggleCycFields();
+    document.getElementById('c_cyc_start').value=oldStart;
+    document.getElementById('c_cyc_len').value=localStorage.getItem('wos_cycle_len')||28;
+    document.getElementById('c_cyc_per').value=localStorage.getItem('wos_period_len')||5; }
+} else {
+  document.getElementById('app').style.display='block';
+  render();
+}
+setInterval(()=>{ if(document.getElementById('app').style.display!=='none') render(); }, 30000);
+</script>
+</body>
+</html>
