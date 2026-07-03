@@ -90,6 +90,19 @@ body {
 
 .foot { text-align:center; font-size:11px; color:#bab5ab; margin-top:24px; }
 
+/* Cycle check-in */
+.checkin { background:#fff4e6; border:1px solid #f0c98a; border-radius:16px; padding:16px 18px; margin-bottom:12px; }
+.checkin p { margin:0 0 10px; font-size:14px; }
+.checkin p b { color:#a8434f; }
+.checkin .btns { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.checkin button { border:none; border-radius:10px; padding:10px 12px; font-size:13px; font-weight:700; cursor:pointer; }
+.checkin .primary { background:#a8434f; color:#fff; }
+.checkin .sec2 { background:#f0e3cf; color:#7a613a; }
+.checkin .ghost { background:none; color:#8a7a5a; text-decoration:underline; padding:10px 4px; }
+.checkin .datewrap { margin-top:10px; display:none; gap:8px; align-items:center; }
+.checkin .datewrap.show { display:flex; }
+.checkin input[type=date]{ padding:9px; border:1px solid #d8d4cc; border-radius:8px; font-size:14px; }
+
 /* ---- Config screen ---- */
 #config { display:none; }
 .chero { margin:6px 0 16px; }
@@ -145,6 +158,19 @@ body {
       </div>
       <button id="next">›</button>
       <button class="todaybtn" id="todaybtn">Today</button>
+    </div>
+
+    <div class="checkin" id="checkin" style="display:none;">
+      <p id="ccmsg"></p>
+      <div class="btns">
+        <button class="primary" id="cc_today">Started today</button>
+        <button class="sec2" id="cc_pick">Another day…</button>
+        <button class="ghost" id="cc_snooze">Not yet</button>
+      </div>
+      <div class="datewrap" id="cc_datewrap">
+        <input type="date" id="cc_date">
+        <button class="primary" id="cc_confirm">Set</button>
+      </div>
     </div>
 
     <div class="banner" id="banner">
@@ -438,6 +464,7 @@ function render(){
   }
 
   // cycle
+  renderCheckin(now);
   renderCycleCard();
 
   // timeline
@@ -473,6 +500,37 @@ function render(){
 }
 function shortType(tk){ return tk==='office'?'Office':tk==='home'?'Home':'Wknd'; }
 function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function isoDate(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function shouldPromptCycle(now){
+  if(!cfg.cycle.enabled || !cfg.cycle.start) return false;
+  const L=parseInt(cfg.cycle.len)||28;
+  const s=new Date(cfg.cycle.start+'T00:00:00');
+  const d=new Date(now); d.setHours(0,0,0,0);
+  const raw=Math.floor((d-s)/86400000);
+  if(raw < L-2) return false;                 // only near/after expected end
+  const sn=localStorage.getItem('wos_cycle_snooze');
+  if(sn){ const su=new Date(sn+'T00:00:00'); if(d<=su) return false; }
+  return true;
+}
+function renderCheckin(now){
+  const box=document.getElementById('checkin');
+  if(!shouldPromptCycle(now)){ box.style.display='none'; return; }
+  box.style.display='block';
+  const c=cycleFor(now);
+  const L=parseInt(cfg.cycle.len)||28;
+  const overdue=c.day>=L;
+  document.getElementById('ccmsg').innerHTML = overdue
+    ? "You're on <b>day "+c.day+"</b> — past your usual ~"+L+"-day cycle. Has your period started? Set the new first day so your phases stay accurate, or keep the current date."
+    : "You're near the end of your ~"+L+"-day cycle (<b>day "+c.day+"</b>). If your period has started, set today (or the right day) as the new Day 1 — otherwise carry on.";
+  document.getElementById('cc_datewrap').classList.remove('show');
+}
+function setCycleStart(dateStr){
+  cfg.cycle.start=dateStr; saveConfig(cfg);
+  localStorage.removeItem('wos_cycle_snooze');
+  render();
+}
 
 function renderCycleCard(){
   const card=document.getElementById('cyccard');
@@ -601,6 +659,20 @@ document.getElementById('gear').addEventListener('click',()=>openConfig(false));
 document.getElementById('prev').addEventListener('click',()=>{ viewDate.setDate(viewDate.getDate()-1); viewDate=new Date(viewDate); render(); });
 document.getElementById('next').addEventListener('click',()=>{ viewDate.setDate(viewDate.getDate()+1); viewDate=new Date(viewDate); render(); });
 document.getElementById('todaybtn').addEventListener('click',()=>{ viewDate=new Date(); render(); });
+document.getElementById('cc_today').addEventListener('click',()=>{ setCycleStart(isoDate(new Date())); });
+document.getElementById('cc_pick').addEventListener('click',()=>{
+  const dw=document.getElementById('cc_datewrap');
+  document.getElementById('cc_date').value=isoDate(new Date());
+  dw.classList.toggle('show');
+});
+document.getElementById('cc_confirm').addEventListener('click',()=>{
+  const v=document.getElementById('cc_date').value; if(v) setCycleStart(v);
+});
+document.getElementById('cc_snooze').addEventListener('click',()=>{
+  const d=new Date(); d.setDate(d.getDate()+2);
+  localStorage.setItem('wos_cycle_snooze', isoDate(d));
+  document.getElementById('checkin').style.display='none';
+});
 document.getElementById('lowbtn').addEventListener('click',()=>{
   low=!low; const b=document.getElementById('lowbtn'); b.classList.toggle('on',low);
   b.textContent=low?'↩︎ Back to full day':'🔋 Low energy — show minimum day';
