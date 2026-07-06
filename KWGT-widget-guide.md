@@ -1,207 +1,132 @@
 # Weekly OS — Samsung Home-Screen Widget (KWGT)
 
-A live home-screen widget that shows **today's day-type** and **what you're doing right now**, updating on its own. KWGT can't import the HTML dashboard, so this rebuilds it using KWGT's own formulas — copy-paste ready below.
+A live home-screen widget showing **today's day-type**, **what you're doing right now**, and (optionally) your **cycle phase** — all updating on their own. KWGT can't import the app's HTML, so this rebuilds it with KWGT formulas, copy-paste ready.
 
-Build the **Minimum version** first (5 minutes, just the day-type). Add the **Live "right now" line** later only if you want it. No pressure to do both.
+---
+
+## ⚠️ The one rule that breaks formulas — no commas
+
+Inside a `$if(...)$`, **KWGT reads a comma as "next argument."** So text like `Cook, plan, rest.` is treated as extra arguments and only a fragment shows (this is why yours displayed just `rest.`).
+
+**In any text a formula returns, don't use commas or parentheses.** Use `·`, `/`, `+`, `–`, or the word "and" instead. Periods, colons and emoji are fine. Every formula below already follows this rule.
+
+Build the **Minimum version** first (day + type), then add the current-block line and phase only if you want them.
 
 ---
 
 ## One-time setup
 
-1. Install **KWGT Kustom Widget Maker** (free) from the Play Store. To use custom formulas without the watermark you need **KWGT Pro** (one-off purchase) — the free version works but nags.
-2. Long-press your home screen → **Widgets** → **KWGT** → drag an empty widget (e.g. 4x2) onto the screen.
-3. Tap the placed widget → it opens the KWGT editor.
-4. In the editor: **Items** → **＋** → **Text**. You'll add a few Text items and paste a formula into each.
-
-For each Text item: tap it → **Text** tab → tap the little **fx** (formula) icon → paste → tick to confirm.
+1. Install **KWGT Kustom Widget Maker** (free; KWGT **Pro** removes the watermark).
+2. Long-press home screen → **Widgets** → **KWGT** → drop a 4×2 widget.
+3. Tap it → the KWGT editor opens.
+4. **Items → ＋ → Text** for each line below. To paste a formula: tap the item → **Text** tab → the **fx** icon → paste → tick.
 
 ---
 
-## Minimum version — day-type card
+## 1. Day + type + mode  (KWGT only — reliable)
 
-Three text items stacked vertically.
+These use only `df(EEEE)` (the day name), so there's no date maths to go wrong.
 
-**Item 1 — Day name** (big)
+**Item 1 — Day name** (big):
 
 ```
 $df(EEEE)$
 ```
 
-**Item 2 — Day type** (headline)
+**Item 2 — Day type** (headline):
 
 ```
 $if(df(EEEE)=Monday|df(EEEE)=Wednesday|df(EEEE)=Friday, OFFICE DAY, if(df(EEEE)=Tuesday|df(EEEE)=Thursday, HOME DAY, WEEKEND))$
 ```
 
-**Item 3 — Mode** (small subtitle)
+**Item 3 — Mode** (subtitle, comma-free):
 
 ```
-$if(df(EEEE)=Monday|df(EEEE)=Wednesday|df(EEEE)=Friday, Survival + recovery. No study or cooking., if(df(EEEE)=Tuesday|df(EEEE)=Thursday, Workhorse day. Study + real exercise., if(df(EEEE)=Saturday, Big-movement + errands + Slot B., Reset day. Cook, plan, rest.)))$
+$if(df(EEEE)=Monday|df(EEEE)=Wednesday|df(EEEE)=Friday, Survival + recovery. No study or cooking., if(df(EEEE)=Tuesday|df(EEEE)=Thursday, Workhorse day. Study + exercise + hair wash., if(df(EEEE)=Saturday, Big-movement + errands + Slot B., Reset day. Cook · yoga · plan · rest.)))$
 ```
-
-That alone gives you a glanceable "what kind of day is this" card that changes automatically at midnight.
 
 ---
 
-## Live "right now" line (optional, advanced)
+## 2. What you're doing right now  (KWGT only — reliable)
 
-Add one more Text item. This reads the clock and shows your current block. It uses `T` = minutes since midnight, which in KWGT is `df(H)*60+df(m)`.
+Time-based, so it advances through the day on its own. It reads the clock as **minutes since midnight** = `df(H)*60+df(m)` and picks the current block. Use **one** Text item with the formula below — it covers all three day-types itself, so **every `if` has a real value** and there are no blank arguments (that empty final slot is what caused the *"argument is missing"* error).
 
-**Office days (Mon/Wed/Fri)** — paste as one item:
-
-```
-$if(df(EEEE)=Monday|df(EEEE)=Wednesday|df(EEEE)=Friday,
- if(df(H)*60+df(m)<320, 😴 Sleep,
- if(df(H)*60+df(m)<345, 🐾 Morning: feed + litter,
- if(df(H)*60+df(m)<360, 🚶 Short dog walk,
- if(df(H)*60+df(m)<480, 🚗 Get ready / commute,
- if(df(H)*60+df(m)<960, 💼 Work,
- if(df(H)*60+df(m)<1080, 🚗 Commute home,
- if(df(H)*60+df(m)<1100, 🛋️ Decompress — no demands,
- if(df(H)*60+df(m)<1140, 🐾 Long dog walk + care,
- if(df(H)*60+df(m)<1185, 🍽️ Reheat dinner,
- if(df(H)*60+df(m)<1200, 🧹 10-min reset,
- if(df(H)*60+df(m)<1260, 🌙 Wind-down,
- 😴 Bed))))))))))), )$
-```
-
-**Home days (Tue/Thu)** — a second item, same idea:
+**Paste this as a single Text item:**
 
 ```
-$if(df(EEEE)=Tuesday|df(EEEE)=Thursday,
- if(df(H)*60+df(m)<330, 😴 Sleep,
- if(df(H)*60+df(m)<375, 🐾 Feed + litter,
- if(df(H)*60+df(m)<405, 🚶 Dog walk,
- if(df(H)*60+df(m)<480, 💪 Reclaimed block (exercise/study),
- if(df(H)*60+df(m)<960, 💼 Work,
- if(df(H)*60+df(m)<980, ⏸️ Transition buffer,
- if(df(H)*60+df(m)<1080, 📚 Second block (study/cook),
- if(df(H)*60+df(m)<1125, 🍽️ Dinner,
- if(df(H)*60+df(m)<1170, 🐾 Dog walk + play,
- if(df(H)*60+df(m)<1200, 🧹 One cleaning zone (15 min),
- if(df(H)*60+df(m)<1290, 🌙 Wind-down,
- 😴 Bed))))))))))), )$
+$if(df(EEEE)=Monday|df(EEEE)=Wednesday|df(EEEE)=Friday, if(df(H)*60+df(m)<300, 😴 Sleep, if(df(H)*60+df(m)<360, 🌅 Animals + walk + hair refresh, if(df(H)*60+df(m)<480, 🚗 Commute, if(df(H)*60+df(m)<960, 💼 Work, if(df(H)*60+df(m)<1080, 🚗 Commute home, if(df(H)*60+df(m)<1100, 🛋️ Decompress – no demands, if(df(H)*60+df(m)<1185, 🐾 Dogs + dinner, if(df(H)*60+df(m)<1200, 🧹 10-min reset, if(df(H)*60+df(m)<1260, 🌙 Wind-down + bonnet, 😴 Bed))))))))), if(df(EEEE)=Tuesday|df(EEEE)=Thursday, if(df(H)*60+df(m)<330, 😴 Sleep, if(df(H)*60+df(m)<405, 🌅 Animals + walk + laundry on, if(df(H)*60+df(m)<480, 💪 Reclaimed block – exercise or study, if(df(H)*60+df(m)<960, 💼 Work, if(df(H)*60+df(m)<1005, 📚 Second block, if(df(H)*60+df(m)<1080, 💧 Hair wash + style, if(df(H)*60+df(m)<1170, 🐾 Dinner + dog walk, if(df(H)*60+df(m)<1200, 🧽 Cleaning zone 15 min, if(df(H)*60+df(m)<1290, 🌙 Wind-down + bonnet, 😴 Bed))))))))), if(df(H)*60+df(m)<420, 😴 Sleep, if(df(H)*60+df(m)<540, 🌅 Animals + hair, if(df(H)*60+df(m)<720, 🏃 Activity / chores, if(df(H)*60+df(m)<960, 🎨 Slot B / study, if(df(H)*60+df(m)<1200, 🍽️ Dinner + walk + rest, if(df(H)*60+df(m)<1290, 🌙 Wind-down + bonnet, 😴 Bed))))))))$
 ```
 
-**Weekend** — a third item:
+*How it reads:* first it checks the day-type (office → home → else weekend), then within that it walks the time thresholds. The very last value, `🌙 Wind-down`, is the weekend "else" — a real value, so nothing is blank.
 
-```
-$if(df(EEEE)=Saturday|df(EEEE)=Sunday,
- if(df(H)*60+df(m)<420, 😴 Sleep,
- if(df(H)*60+df(m)<450, 🐾 Feed + litter,
- if(df(H)*60+df(m)<600, 🏃 Long activity / movement,
- if(df(H)*60+df(m)<780, 🛒 Errands / cook,
- if(df(H)*60+df(m)<960, 🎨 Slot B / study,
- if(df(H)*60+df(m)<1200, 🍽️ Dinner + walk,
- if(df(H)*60+df(m)<1290, 🌙 Wind-down,
- 😴 Bed))))))), )$
-```
-
-Stack all three "right now" items in the same spot — only the one matching today's day-type shows text; the other two return blank, so they don't collide.
+**Time thresholds used** (edit any to taste — they're minutes since midnight): 300 = 5:00, 330 = 5:30, 360 = 6:00, 405 = 6:45, 420 = 7:00, 480 = 8:00, 540 = 9:00, 720 = 12:00, 960 = 16:00, 1005 = 16:45, 1080 = 18:00, 1100 = 18:20, 1170 = 19:30, 1185 = 19:45, 1200 = 20:00, 1260 = 21:00, 1290 = 21:30.
 
 ---
 
-## Cycle phase line (optional)
+## 3. Cycle phase  (KWGT only — no Tasker, nothing to pay for)
 
-You want this to advance on its own instead of editing dates every cycle. Two ways — pick one.
+Two options. The **Reliable** one is guaranteed to work today; the **Self-advancing** one never needs date edits *if* your KWGT build supports its two functions — so test it first.
 
-### Option 1 — Self-advancing formula (KWGT only, no Tasker)
+### Option A — Reliable (works right now)
 
-Store your period start date once in a KWGT **global**, and the widget computes the phase from it every day — you only touch that one date when a new cycle starts.
-
-1. KWGT editor → the **globals** icon (the ⚙/sliders at the bottom) → **＋** → **Text** global. Name it `cyclestart`, value `2026-07-02` (your last period's first day).
-2. Add a Text item and paste this (it works out today's day-of-cycle and picks the phase):
+Fixed dates for the current cycle. `df(yyyyMMdd)` turns today into a number like `20260705`; each threshold is the day *after* a phase ends, so the phase changes on its own as days pass. Comma-free, no add-ons.
 
 ```
-$if(dc(dr, gv(cyclestart))%28<5, 🩸 Menstrual,
- if(dc(dr, gv(cyclestart))%28<12, 🌱 Follicular,
- if(dc(dr, gv(cyclestart))%28<15, ☀️ Ovulatory,
- if(dc(dr, gv(cyclestart))%28<25, 🍂 Early luteal, 🌘 Late luteal (PMS)))))$
+$if(df(yyyyMMdd)<20260707, 🩸 Menstrual, if(df(yyyyMMdd)<20260714, 🌱 Follicular, if(df(yyyyMMdd)<20260717, ☀️ Ovulatory, if(df(yyyyMMdd)<20260726, 🍂 Early luteal, if(df(yyyyMMdd)<20260730, 🌘 Late luteal, 🔄 New cycle – update dates)))))$
 ```
 
-`dc(dr, gv(cyclestart))` = days between now and your start date; `%28` wraps it into a cycle; the thresholds pick the phase. **When your next period starts, just change the one `cyclestart` global to that date** — no formula edits, ever.
+When it flips to **"New cycle – update dates,"** that's your signal the current cycle's numbers are stale. Refresh them one of two ways: shift each of the five numbers forward by your cycle length, or just tell me your new start date and I'll paste you a fresh block (same moment I realign your calendar bands) — about 30 seconds.
 
-*Verify once:* drop `$dc(dr, gv(cyclestart))$` into a temporary text field and check it shows the number of days since your start (should read `3` on 5 Jul). If your KWGT build uses a slightly different date-diff token, that quick check will tell you.
-
-Phase colour (optional) — set the text **Color** to:
+Matching colour (optional):
 
 ```
-$if(dc(dr, gv(cyclestart))%28<5, #FFA8434F,
- if(dc(dr, gv(cyclestart))%28<12, #FF3F6F5C,
- if(dc(dr, gv(cyclestart))%28<15, #FFC8912F,
- if(dc(dr, gv(cyclestart))%28<25, #FFA9784F, #FF6B5B8A))))$
+$if(df(yyyyMMdd)<20260707, #FFA8434F, if(df(yyyyMMdd)<20260714, #FF3F6F5C, if(df(yyyyMMdd)<20260717, #FFC8912F, if(df(yyyyMMdd)<20260726, #FFA9784F, #FF6B5B8A))))$
 ```
 
-### Option 2 — Fully hands-off with Tasker (recommended)
+### Option B — Self-advancing (never edit dates — if your build supports it)
 
-This is what you asked about: Tasker does the maths daily and feeds the phase to the widget, and a one-tap button rolls the cycle over. KWGT just displays the result.
+Computes the phase from one stored start date, so it rolls over on its own. It needs a date-difference function (`dc`) and modulo (`%`), which some KWGT builds handle differently — so **test before trusting it**.
 
-**A. One-time setup**
-
-1. Install **Tasker**. In Tasker → **☰ → More → Android settings**, make sure **“Allow external access”** and Kustom's *“Allow Kustom to read Tasker variables”* are on (KWGT ⚙ → Settings → sometimes under “Advanced”).
-2. In Tasker, make a global variable `%CYCLESTART` = `1782914400` (that's the epoch seconds for your 2 Jul start — Variables tab → ＋).
-
-**B. Task: `UpdatePhase`** (Tasker → Tasks → ＋)
-
-```
-1. Variable Set:   %days   To  (%TIMES - %CYCLESTART)/86400     [Do Maths ✓]
-2. Variable Set:   %day    To  floor(%days)%28 + 1              [Do Maths ✓]
-3. Variable Set:   %PHASE  To  🩸 Menstrual    If  %day ≤ 5
-4. Variable Set:   %PHASE  To  🌱 Follicular   If  %day > 5  & %day ≤ 12
-5. Variable Set:   %PHASE  To  ☀️ Ovulatory    If  %day > 12 & %day ≤ 15
-6. Variable Set:   %PHASE  To  🍂 Early luteal  If  %day > 15 & %day ≤ 24
-7. Variable Set:   %PHASE  To  🌘 Late luteal   If  %day > 24
-8. Variable Set:   %CDAY   To  %day
-```
-
-`%PHASE` and `%CDAY` are capitalised, so they're **global** and persist for KWGT to read.
-
-**C. Profile: run it daily** (Tasker → Profiles → ＋ → **Time** → 12:05am to 12:05am, or **Event → Date Set**) → link it to `UpdatePhase`. Also long-press the profile and add the same task to run at boot if you like.
-
-**D. Show it in the widget** — KWGT Text item:
+1. KWGT editor → **globals** → ＋ → **Text** global named `cyclestart`, value `2026-07-02`.
+2. **Test:** put `$dc(d, gv(cyclestart))$` in a temporary Text item and read it today (5 Jul):
+   - Shows **3** (a positive day count) → use the formula below as-is. ✅
+   - Shows **-3** (negative) → replace every `dc(d, gv(cyclestart))` with `0-dc(d, gv(cyclestart))`.
+   - Shows an **error or blank** → your build doesn't support it; stick with Option A.
+3. Phase formula:
 
 ```
-$tasker(PHASE)$ · Day $tasker(CDAY)$
+$if(dc(d, gv(cyclestart))%28<5, 🩸 Menstrual, if(dc(d, gv(cyclestart))%28<12, 🌱 Follicular, if(dc(d, gv(cyclestart))%28<15, ☀️ Ovulatory, if(dc(d, gv(cyclestart))%28<24, 🍂 Early luteal, 🌘 Late luteal))))$
 ```
 
-**E. One-tap "new cycle" button** — make a Tasker task `NewCycle`:
+When your period starts, change **only** the `cyclestart` global to the new date — the formula never changes.
 
-```
-1. Variable Set:  %CYCLESTART  To  %TIMES
-2. Perform Task:  UpdatePhase
-```
-
-Add it as a **Tasker Task shortcut/widget** on your home screen (or a KWGT touch action → Tasker Task → NewCycle). When your period starts, tap it once — day resets to 1 and the widget updates instantly. That's the same job the app's check-in does, mirrored to your widget.
-
-*(Option 2 assumes a 28-day cycle for the phase maths, like the calendar bands. The My Week app stays your always-accurate source and self-corrects via its check-in; this just mirrors the current phase onto the home screen with no upkeep.)*
+*(Both assume a 28-day cycle. The My Week app remains your always-accurate source and self-corrects via its check-in; the widget just mirrors the phase to your home screen.)*
 
 ---
 
-## Colors (to match the dashboard)
+## Colours (to match the dashboard)
 
-Tap a text item → **Color**:
+Tap a Text item → **Color**. Fixed colours:
 
-- Office days: deep blue `#43617F`
-- Home days: green `#3F6F5C`
-- Weekend: amber `#8A5F3C`
+- Office: deep blue `#43617F`  ·  Home: green `#3F6F5C`  ·  Weekend: amber `#8A5F3C`
 
-To make the headline auto-recolor by day-type, set the text **Color** field to a formula instead of a fixed swatch:
+To auto-recolour the headline by day-type, set the **Color** field to this formula (colour codes have no commas, so they're safe):
 
 ```
 $if(df(EEEE)=Monday|df(EEEE)=Wednesday|df(EEEE)=Friday, #FF43617F, if(df(EEEE)=Tuesday|df(EEEE)=Thursday, #FF3F6F5C, #FF8A5F3C))$
 ```
 
-(KWGT colors are `#AARRGGBB` — the `FF` prefix is full opacity.)
+(KWGT colours are `#AARRGGBB` — `FF` = fully opaque.)
 
 ---
 
 ## Two things to check
 
-1. **Day-name language.** `df(EEEE)` returns the day in your phone's language. If your phone isn't in English, swap `Monday`/`Tuesday`/etc. for your local spellings.
-2. **Refresh.** In the KWGT editor, set the widget's update interval (Global settings → often "1 min") so the "right now" line stays current. Time-based text updates on its own tick.
+1. **Day-name language.** `df(EEEE)` returns the day in your phone's language. If it's not English, swap `Monday`/`Tuesday`/etc. for your local spellings.
+2. **Refresh rate.** KWGT global settings → set the update interval to **1 min** so the "right now" line stays current.
 
 ---
 
 ## Lock screen / Always-On Display
 
-KWGT widgets live on the **home screen**. Samsung doesn't allow custom third-party widgets on the true lock screen or Always-On Display. For a persistent lock-screen presence, use the **calendar reminders** instead — imported calendar events with alarms show on the lock screen and AOD natively. The KWGT widget is your home-screen "at a glance"; the calendar is your lock-screen + notification layer. Together they cover both.
+KWGT widgets live on the **home screen** — Samsung doesn't allow custom third-party widgets on the true lock screen or AOD. For a lock-screen presence, lean on your **calendar** (its events show on the lock screen and AOD natively). Home screen = KWGT at-a-glance; lock screen = calendar. Together they cover both.

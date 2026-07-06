@@ -15,7 +15,7 @@ Full step-by-step (no coding): **`guides/host-on-github-pages.md`**. Once live, 
 ## 2. Guides
 
 - `guides/host-on-github-pages.md` — host it + install as a phone app (PWA)
-- `guides/KWGT-widget-guide.md` — Samsung home-screen widget, incl. **auto-updating cycle phase via Tasker**
+- `guides/KWGT-widget-guide.md` — Samsung home-screen widget (KWGT only, no paid apps), incl. a self-advancing cycle-phase line
 - `guides/cleaning-laundry-yard-schedule.md` — cleaning / laundry / yard rotation + Monday bin roster
 - `guides/curly-hair-schedule.md` — curly (3a–3c) wash/refresh/treatment routine
 
@@ -34,6 +34,6 @@ Your `my-week-backup.json` is **not** included here — it holds personal settin
 
 - **Dashboard** — recomputes your day + cycle phase automatically; prompts you at cycle-end to confirm the date. Self-maintaining.
 - **Calendar** — all reminders + the cycle phase bands recur on their own (28-day assumption). No upkeep unless your cycle shifts.
-- **Widget** — with the Tasker option, advances daily on its own; one-tap button to roll to a new cycle.
+- **Widget** — day-type and current block advance on their own; the cycle-phase line either self-advances or takes a ~30-second date refresh each cycle (KWGT only, no paid apps).
 
 To update the hosted app later, just re-upload a new `index.html`; your saved settings persist (they live in the browser, not the file).
